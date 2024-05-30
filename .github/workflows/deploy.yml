@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+            persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -29,4 +31,7 @@ jobs:
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn deploy
+          ACTIONS_DEPLOY_KEY: ${{ secrets.PAT_FOR_ADRYANA_MATH_QUIZ_REPO }}
+        run: |
+            git remote set-url origin https://x-access-token:${{ secrets.PAT_FOR_ADRYANA_MATH_QUIZ_REPO  }}@github.com/${{ github.repository }}.git
+            yarn deploy
