@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Question from './Question';
 
 interface QuizPageProps {
@@ -70,11 +70,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
     return () => clearInterval(timer);
   }, [paused]);
 
-  useEffect(() => {
-    generateQuestions();
-  }, [settings]);
-
-  const generateQuestions = () => {
+  const generateQuestions = useCallback(() => {
     const newQuestions = [];
     for (let i = 0; i < 10; i++) {
       newQuestions.push(generateQuestion(Object.keys(settings.operators).filter(op => settings.operators[op]), settings.range));
@@ -86,7 +82,11 @@ const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
     setIncorrectCount(0);
     setPaused(false);
     setTimeElapsed(0);
-  };
+  }, [settings]);
+
+  useEffect(() => {
+    generateQuestions();
+  }, [settings, generateQuestions]);
 
   const handleCheck = () => {
     let correct = 0;
