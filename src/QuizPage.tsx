@@ -98,10 +98,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
     setQuestions(newQuestions);
     setAnswers({});
     setChecked(false);
-    setCorrectCount(0);
-    setIncorrectCount(0);
     setPaused(false);
-    setTimeElapsed(0);
   }, [settings]);
 
   useEffect(() => {
@@ -118,8 +115,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
         incorrect++;
       }
     });
-    setCorrectCount(correct);
-    setIncorrectCount(incorrect);
+    setCorrectCount(prev => prev + correct);
+    setIncorrectCount(prev => prev + incorrect);
     setChecked(true);
   };
 
@@ -129,12 +126,18 @@ const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
     setAnswers({ ...answers, [index]: answer });
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="info mb-6 text-center">
-        <div className="mb-2">Correct: {correctCount}</div>
-        <div className="mb-2">Incorrect: {incorrectCount}</div>
-        <div className="mb-2">Time: {timeElapsed}s</div>
+        <div className="mb-2">
+          Correct: {correctCount}, Wrong: {incorrectCount}, Time: {formatTime(timeElapsed)}
+        </div>
         <button onClick={handlePause} className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-200">
           {paused ? 'Resume' : 'Pause'}
         </button>

@@ -25,18 +25,22 @@ const Question: React.FC<QuestionProps> = ({ index, question, correctAnswer, che
       <span className="mr-4">{question} = </span>
       <input
         type="number"
-        step="1"
-        className="p-1 border border-gray-300 rounded"
+        className="p-1 border border-gray-300 rounded w-20"
         value={userAnswer}
         onChange={handleChange}
         disabled={checked}
+        style={{
+          overflow: 'hidden',
+          WebkitAppearance: 'none', // Chrome, Safari, Edge, Opera
+          MozAppearance: 'textfield' // Firefox
+        }}
       />
       {checked && (
         <span className="ml-4">
           {correctAnswer === userAnswer ? (
-            <span className="text-green-500 ml-2">✓</span>
+            <span className="text-green-500 ml-2">&#10003;</span>
           ) : (
-            <span className="text-red-500 ml-2">✗</span>
+            <span className="text-red-500 ml-2">&#10007;</span>
           )}
         </span>
       )}
