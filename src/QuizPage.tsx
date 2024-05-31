@@ -16,7 +16,7 @@ interface QuestionType {
 
 const generateQuestion = (operators: string[], range: { min: number; max: number }): QuestionType => {
   const op = operators[Math.floor(Math.random() * operators.length)];
-  const num1 = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+  let num1 = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
   let num2 = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
 
   // Ensure num2 is not 1 for division
@@ -27,24 +27,28 @@ const generateQuestion = (operators: string[], range: { min: number; max: number
   let question = '';
   let answer = 0;
 
-  switch(op) {
+  switch (op) {
     case '+':
       question = `${num1} + ${num2}`;
       answer = num1 + num2;
       break;
     case '-':
-      question = `${num1} - ${num2}`;
-      answer = num1 - num2;
+      if (num1 > num2) {
+        question = `${num1} - ${num2}`;
+        answer = num1 - num2;
+      } else {
+        question = `${num2} - ${num1}`;
+        answer = num2 - num1;
+      }
       break;
     case '*':
       question = `${num1} . ${num2}`;
       answer = num1 * num2;
       break;
     case '/':
-      // Ensure division results in an integer and change the division symbol to ':'
-      const dividend = num1 * num2; // So the result will always be an integer
-      question = `${dividend} : ${num2}`;
-      answer = dividend / num2;
+      let nums = divitionNumbers(range.min, range.max);
+      question = `${nums[0]} : ${nums[1]}`;
+      answer = nums[0] / nums[1];
       break;
     default:
       break;
@@ -52,6 +56,22 @@ const generateQuestion = (operators: string[], range: { min: number; max: number
 
   return { question, answer: answer.toString() }; // Store answer as string to compare properly
 };
+
+const divitionNumbers = (min: number, max: number): [number, number] => {
+  let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+  let divisors: number[] = [];
+
+  for (let i = 2; i < num1; i++)
+    if (num1 % i === 0)
+      divisors.push(i);
+
+  if (divisors.length === 0) {
+    return divitionNumbers(min, max)
+  }
+  let divisorsRandIndex = Math.floor(Math.random() * divisors.length);
+  let num2 = divisors[divisorsRandIndex]
+  return [num1, num2]
+}
 
 const QuizPage: React.FC<QuizPageProps> = ({ settings, onReset }) => {
   const [questions, setQuestions] = useState<QuestionType[]>([]);
