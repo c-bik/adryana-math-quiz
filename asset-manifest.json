@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/adryana-math-quiz/static/css/main.09b66488.css",
-    "main.js": "/adryana-math-quiz/static/js/main.f45ddd0b.js",
+    "main.css": "/adryana-math-quiz/static/css/main.7b7e2bfd.css",
+    "main.js": "/adryana-math-quiz/static/js/main.d0c4d0e9.js",
     "static/js/453.439b30ac.chunk.js": "/adryana-math-quiz/static/js/453.439b30ac.chunk.js",
     "index.html": "/adryana-math-quiz/index.html",
-    "main.09b66488.css.map": "/adryana-math-quiz/static/css/main.09b66488.css.map",
-    "main.f45ddd0b.js.map": "/adryana-math-quiz/static/js/main.f45ddd0b.js.map",
+    "main.7b7e2bfd.css.map": "/adryana-math-quiz/static/css/main.7b7e2bfd.css.map",
+    "main.d0c4d0e9.js.map": "/adryana-math-quiz/static/js/main.d0c4d0e9.js.map",
     "453.439b30ac.chunk.js.map": "/adryana-math-quiz/static/js/453.439b30ac.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.09b66488.css",
-    "static/js/main.f45ddd0b.js"
+    "static/css/main.7b7e2bfd.css",
+    "static/js/main.d0c4d0e9.js"
   ]
 }
